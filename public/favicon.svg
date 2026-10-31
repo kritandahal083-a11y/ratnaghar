@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
+  <rect width="64" height="64" fill="#071426"/>
+  <!-- Shree Ratna Ghar gem mark -->
+  <path d="M17 12 L47 12 L60 25 L32 55 L4 25 Z" stroke="#D4AF37" stroke-width="3" stroke-linejoin="round" fill="none"/>
+  <path d="M4 25 L60 25" stroke="#D4AF37" stroke-width="1.8" opacity="0.9"/>
+  <path d="M17 12 L28 25 L32 55 M47 12 L36 25 L32 55" stroke="#3E6FB8" stroke-width="1.8" stroke-linejoin="round" fill="none"/>
+  <circle cx="60" cy="25" r="3" fill="#D4AF37"/>
+</svg>

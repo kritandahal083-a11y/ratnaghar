@@ -1,0 +1,166 @@
+---
+/**
+ * Demo-project art covers. These are designed posters for fictional
+ * concepts — deliberately NOT fake app screenshots.
+ */
+import type { Project } from '../data/work';
+
+interface Props {
+  project: Project;
+  /** Render the compact dialog version */
+  compact?: boolean;
+  class?: string;
+}
+
+const { project, compact = false, class: className } = Astro.props;
+const { art } = project;
+const { variant, bg, fg } = art;
+const vertical = variant === 'oriole' ? '4/5' : '5/4';
+---
+
+<figure class:list={['cover', className]} style={`--cover-bg:${bg}; --cover-fg:${fg}; --cover-ar:${vertical};`} aria-hidden="true">
+  <svg class="cover__art" viewBox="0 0 600 480" preserveAspectRatio="xMidYMid slice" fill="none">
+    {
+      variant === 'velora' && (
+        <>
+          {/* inset navy frame — gives the light cover a designed edge */}
+          <rect x="34" y="34" width="532" height="412" stroke="#0B1F3A" stroke-width="1.6" />
+          <rect x="46" y="46" width="508" height="120" stroke="#0B1F3A" stroke-width="1" opacity="0.35" />
+          <g stroke="#0B1F3A" stroke-width="1" opacity="0.5">
+            <line x1="70" y1="82" x2="300" y2="82" />
+            <line x1="70" y1="110" x2="240" y2="110" />
+            <line x1="70" y1="138" x2="270" y2="138" />
+          </g>
+          <g stroke="#D4AF37" stroke-width="2">
+            <circle cx="468" cy="240" r="96" />
+            <circle cx="468" cy="240" r="62" />
+          </g>
+          <circle cx="468" cy="144" r="5" fill="#D4AF37" />
+          <circle cx="108" cy="330" r="7" stroke="#0B1F3A" stroke-width="1.6" />
+          <circle cx="108" cy="330" r="2.6" fill="#D4AF37" />
+          <g fill="#0B1F3A" opacity="0.55">
+            {Array.from({ length: 5 }).map((_, i) => (
+              <rect x={70 + i * 22} y="392" width="10" height="10" transform={`rotate(45 ${75 + i * 22} 397)`} />
+            ))}
+          </g>
+        </>
+      )
+    }
+    {
+      variant === 'nova' && (
+        <>
+          <g stroke="#FFFFFF" stroke-width="1" opacity="0.45">
+            <line x1="0" y1="120" x2="600" y2="120" />
+            <line x1="0" y1="240" x2="600" y2="240" />
+            <line x1="0" y1="360" x2="600" y2="360" />
+          </g>
+          <path d="M40 392 L200 330 L330 356 L470 210 L560 236" stroke="#FFFFFF" stroke-width="2.4" />
+          <path d="M40 352 L180 300 L320 318 L470 160 L560 176" stroke="#D4AF37" stroke-width="2" />
+          <circle cx="470" cy="210" r="6" fill="#D4AF37" />
+          <circle cx="470" cy="160" r="2.5" fill="#FFFFFF" />
+        </>
+      )
+    }
+    {
+      variant === 'oriole' && (
+        <>
+          <circle cx="432" cy="240" r="158" stroke="#071426" stroke-width="2" />
+          <circle cx="480" cy="286" r="104" stroke="#071426" stroke-width="1.4" opacity="0.5" />
+          <g stroke="#071426" stroke-width="1" opacity="0.35">
+            <line x1="70" y1="120" x2="300" y2="120" />
+            <line x1="70" y1="394" x2="240" y2="394" />
+          </g>
+          <circle cx="300" cy="348" r="5" fill="#071426" />
+        </>
+      )
+    }
+    {
+      variant === 'bloom' && (
+        <>
+          <g stroke="#D4AF37" stroke-width="1.6" opacity="0.85">
+            {Array.from({ length: 12 }).map((_, i) => {
+              const a = (i * 30 * Math.PI) / 180;
+              const r1 = 120, r2 = 214;
+              return (
+                <line
+                  x1={300 + r1 * Math.cos(a)}
+                  y1={268 + r1 * Math.sin(a)}
+                  x2={300 + r2 * Math.cos(a)}
+                  y2={268 + r2 * Math.sin(a)}
+                />
+              );
+            })}
+          </g>
+          <circle cx="300" cy="268" r="64" stroke="#FFFFFF" stroke-width="1.6" opacity="0.7" />
+          <circle cx="300" cy="268" r="10" fill="#D4AF37" />
+        </>
+      )
+    }
+    {
+      variant === 'atlas' && (
+        <>
+          <g stroke="#FFFFFF" stroke-width="1" opacity="0.16">
+            <line x1="0" y1="104" x2="600" y2="104" />
+            <line x1="0" y1="376" x2="600" y2="376" />
+          </g>
+          <path d="M60 392 h84 m-42 -21 v84" stroke="#D4AF37" stroke-width="2" />
+          <circle cx="520" cy="96" r="26" stroke="#D4AF37" stroke-width="1.6" />
+          <circle cx="520" cy="96" r="7" fill="#D4AF37" />
+        </>
+      )
+    }
+  </svg>
+
+  <figcaption class="cover__text">
+    <span class="cover__brand" style={`color:${fg}`}>
+      {variant === 'atlas' ? (
+        <span class="cover__slogan">
+          GO EASY.<br />GO FAR.
+        </span>
+      ) : (
+        project.name
+      )}
+    </span>
+  </figcaption>
+</figure>
+
+<style>
+  .cover {
+    position: relative;
+    margin: 0;
+    aspect-ratio: var(--cover-ar);
+    background: var(--cover-bg);
+    overflow: hidden;
+    height: 100%;
+  }
+  .cover__art {
+    position: absolute;
+    inset: -6%;
+    width: 112%;
+    height: 112%;
+    transition: transform 0.7s var(--ease);
+  }
+  .cover:hover .cover__art { transform: scale(1.035); }
+
+  .cover__text {
+    position: absolute;
+    left: 8%;
+    right: 8%;
+    bottom: 10%;
+    display: grid;
+    gap: 0.4rem;
+  }
+  .cover__brand {
+    font-family: var(--font-display);
+    font-weight: 600;
+    font-size: clamp(1.5rem, 2.6vw, 2.15rem);
+    letter-spacing: -0.01em;
+    line-height: 1.02;
+  }
+  .cover__slogan {
+    font-size: clamp(2rem, 3.6vw, 3rem);
+    letter-spacing: 0.01em;
+  }
+
+  :global(.modal-cover .cover__art) { inset: 0; width: 100%; height: 100%; transform: none; }
+</style>

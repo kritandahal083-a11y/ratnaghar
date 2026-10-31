@@ -1,0 +1,66 @@
+---
+import Icon from './Icon.astro';
+---
+
+<section class="cta" aria-label="Start your project">
+  <div class="container cta__in" data-reveal>
+    <h2 class="display-1 cta__head">
+      Your Next Big Idea Deserves
+      <span class="cta__brand">Shree Ratna Ghar.</span>
+    </h2>
+    <div class="cta__side">
+      <p class="cta__line">Let's transform your vision into something extraordinary.</p>
+      <a class="btn btn--gold cta__btn" href="#contact">
+        Start Your Project
+        <Icon class="icon-arrow" name="ph:arrow-right" size={17} />
+      </a>
+    </div>
+  </div>
+</section>
+
+<style>
+  .cta {
+    background: var(--navy-900);
+    padding-block: clamp(4.5rem, 9vw, 7.5rem);
+  }
+  .cta__in {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: clamp(2rem, 4vw, 3rem);
+    padding-top: 2rem;
+    border-top: 1px solid rgba(212, 175, 55, 0.35);
+    position: relative;
+  }
+  .cta__in::before {
+    content: '';
+    position: absolute;
+    top: -6px;
+    left: 0;
+    width: 9px;
+    height: 9px;
+    transform: rotate(45deg);
+    background: var(--gold);
+  }
+
+  .cta__head {
+    color: #F2F7FD;
+    /* explicit line art below; let the brand chunk stay atomic */
+    text-wrap: wrap;
+  }
+  .cta__brand {
+    color: var(--gold);
+    white-space: nowrap;
+  }
+  @media (max-width: 26rem) {
+    .cta__brand { white-space: normal; }
+  }
+
+  .cta__side { max-width: 24rem; }
+  .cta__line {
+    color: #B9C8DC;
+    font-size: 1.05rem;
+    margin-bottom: 1.5rem;
+  }
+  .cta__btn { white-space: nowrap; }
+
+</style>

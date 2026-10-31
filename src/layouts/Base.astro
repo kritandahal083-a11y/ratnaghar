@@ -1,0 +1,92 @@
+---
+import '../styles/global.css';
+
+interface Props {
+  title: string;
+  description: string;
+}
+
+const { title, description } = Astro.props;
+
+/** Structured data: Organization summary. No fabricated statistics or reviews. */
+const schema = {
+  '@context': 'https://schema.org',
+  '@type': 'Organization',
+  name: 'Shree Ratna Ghar',
+  slogan: 'Turning Vision Into Digital Excellence.',
+  description,
+  knowsAbout: [
+    'Web development',
+    'Software development',
+    'UI/UX design',
+    'Digital marketing',
+    'Social media management',
+    'Digital advertising',
+    'SEO',
+    'Branding',
+    'Cloud infrastructure',
+    'IT consulting',
+  ],
+};
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="color-scheme" content="light" />
+    <meta name="theme-color" content="#071426" />
+
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    <meta name="author" content="Shree Ratna Ghar" />
+
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:site_name" content="Shree Ratna Ghar" />
+    <meta name="twitter:card" content="summary" />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content={description} />
+
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link
+      rel="preload"
+      href="/fonts/clash-display-var.woff2"
+      as="font"
+      type="font/woff2"
+      crossorigin
+    />
+    <link rel="preload" href="/fonts/satoshi-var.woff2" as="font" type="font/woff2" crossorigin />
+
+    <script type="application/ld+json" set:html={JSON.stringify(schema)} />
+  </head>
+
+  <body>
+    <a class="skip-link" href="#main">Skip to content</a>
+    <slot />
+    <script is:inline>document.documentElement.classList.add('js');</script>
+
+    <script>
+      // Scroll-reveal engine: one IntersectionObserver for the whole page,
+      // transform/opacity only, disabled under prefer-reduced-motion.
+      const revealables = document.querySelectorAll('[data-reveal]');
+      if ('IntersectionObserver' in window) {
+        const io = new IntersectionObserver(
+          (entries) => {
+            for (const entry of entries) {
+              if (!entry.isIntersecting) continue;
+              entry.target.classList.add('is-in');
+              io.unobserve(entry.target);
+            }
+          },
+          { threshold: 0.15, rootMargin: '0px 0px -7% 0px' }
+        );
+        revealables.forEach((el) => io.observe(el));
+      } else {
+        revealables.forEach((el) => el.classList.add('is-in'));
+      }
+    </script>
+  </body>
+</html>

@@ -1,0 +1,96 @@
+---
+import Icon from './Icon.astro';
+import { INDUSTRIES } from '../data/industries';
+---
+
+<section class="industries bg-white" id="industries">
+  <div class="container">
+    <div class="ind__head" data-reveal>
+      <h2 class="display-2">A standard that travels.</h2>
+      <p class="ind__lead">
+        Eight sectors, one way of working: understand the domain first, then bring the craft.
+      </p>
+    </div>
+
+    <ul class="ind__grid">
+      {
+        INDUSTRIES.map((ind, i) => (
+          <li class="ind" data-reveal style={`--d:${i * 0.05}s`}>
+            <span class="ind__icon">
+              <Icon name={ind.icon} size={22} />
+            </span>
+            <h3 class="ind__name">{ind.name}</h3>
+            <p class="ind__text">{ind.text}</p>
+          </li>
+        ))
+      }
+    </ul>
+  </div>
+</section>
+
+<style>
+  .industries { padding-block: var(--sec-y); }
+
+  .ind__head { max-width: 46rem; }
+  .ind__lead {
+    margin-top: 1.2rem;
+    color: var(--muted-c);
+    max-width: 48ch;
+  }
+
+  .ind__grid {
+    margin-top: clamp(2.6rem, 5vw, 4.2rem);
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    border-left: 1px solid var(--line);
+    border-top: 1px solid var(--line);
+  }
+  .ind {
+    padding: 1.7rem 1.5rem 1.9rem;
+    border-right: 1px solid var(--line);
+    border-bottom: 1px solid var(--line);
+    position: relative;
+    transition: background-color 0.3s var(--ease);
+  }
+  .ind::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    bottom: -1px;
+    width: 0;
+    height: 2px;
+    background: var(--gold);
+    transition: width 0.45s var(--ease);
+  }
+  .ind:hover::after { width: 100%; }
+  .ind:hover { background: rgba(247, 249, 252, 0.9); }
+
+  .ind__icon {
+    color: var(--royal);
+    display: inline-flex;
+    margin-bottom: 1rem;
+    transition: color 0.3s var(--ease);
+  }
+  .ind:hover .ind__icon { color: var(--gold-ink); }
+
+  .ind__name {
+    font-family: var(--font-display);
+    font-size: 1.08rem;
+    font-weight: 570;
+    color: var(--heading);
+  }
+  .ind__text {
+    margin-top: 0.55rem;
+    font-size: 0.9rem;
+    line-height: 1.55;
+    color: var(--muted-c);
+  }
+
+  @media (max-width: 62rem) {
+    .ind__grid { grid-template-columns: repeat(2, 1fr); }
+  }
+  @media (max-width: 30rem) {
+    .ind__grid { grid-template-columns: 1fr; }
+    .ind { padding-inline: 1.2rem; }
+  }
+</style>

@@ -1,0 +1,154 @@
+---
+import Icon from './Icon.astro';
+
+const facets = [
+  {
+    title: 'Who We Are',
+    icon: 'ph:users-three',
+    text: 'A team of engineers, designers, and strategists who treat every business problem as something buildable — measurable, solvable, and worth doing properly.',
+  },
+  {
+    title: 'Our Mission',
+    icon: 'ph:target',
+    text: 'Deliver technology and marketing that work as one system: engineered carefully, designed honestly, and measured against real business outcomes.',
+  },
+  {
+    title: 'Our Vision',
+    icon: 'ph:compass',
+    text: 'A digital world where ambitious businesses of any size can compete — with craft, clarity, and confidence.',
+  },
+  {
+    title: 'Our Approach',
+    icon: 'ph:flow-arrow',
+    text: 'Listen first, plan second, build third. We measure twice and deliver once — then keep improving what we ship.',
+  },
+];
+---
+
+<section class="section about bg-white" id="about">
+  <div class="container">
+    <div class="about__head" data-reveal>
+      <div class="rule" aria-hidden="true"></div>
+      <h2 class="display-2">More Than Technology.<br/>We Create Possibilities.</h2>
+    </div>
+
+    <div class="about__grid">
+      <div class="about__col-text" data-reveal style="--d:.1s">
+        <p class="lead">
+          Shree Ratna Ghar combines engineering discipline with creative thinking. One team designs your
+          product, builds it, and takes it to market — so nothing gets lost between the plan and
+          the payoff.
+        </p>
+        <p>
+          We work with founders, marketing directors, and operations leads who want technology and
+          communication to pull in the same direction. Sometimes that means building the platform.
+          Sometimes it means getting the platform seen. More often, it means both — done to the
+          same standard.
+        </p>
+      </div>
+
+      <ul class="about__facets" style="--d:.2s" data-reveal>
+        {
+          facets.map((f) => (
+            <li class="facet">
+              <span class="facet__icon">
+                <Icon name={f.icon} size={22} />
+              </span>
+              <div>
+                <h3 class="display-3 facet__title">{f.title}</h3>
+                <p class="facet__text">{f.text}</p>
+              </div>
+            </li>
+          ))
+        }
+      </ul>
+    </div>
+
+    <figure class="about__quote" data-reveal>
+      <span class="about__quote-node" aria-hidden="true"></span>
+      <blockquote>
+        <p class="about__quote-line">“Turning Vision Into Digital&nbsp;Excellence.”</p>
+      </blockquote>
+      <figcaption class="about__quote-caption">Every engagement, measured against this.</figcaption>
+    </figure>
+  </div>
+</section>
+
+<style>
+  .about__head h2 { max-width: 22ch; }
+
+  .about__grid {
+    display: grid;
+    grid-template-columns: minmax(0, 0.92fr) minmax(0, 1.08fr);
+    gap: clamp(2.2rem, 5vw, 5rem);
+    padding-top: clamp(2.5rem, 5vw, 4rem);
+  }
+  .about__col-text { display: grid; gap: 1.4rem; align-content: start; }
+  .about__col-text .lead { color: var(--muted-c); }
+  .about__col-text p:not(.lead) { max-width: 52ch; }
+
+  .about__facets {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0 2.6rem;
+  }
+  .facet {
+    display: flex;
+    gap: 1.1rem;
+    padding: 1.6rem 0;
+    border-top: 1px solid var(--line);
+    align-items: flex-start;
+  }
+  .facet:nth-child(odd) { padding-right: 0; }
+  .facet__icon {
+    flex-shrink: 0;
+    display: grid;
+    place-items: center;
+    width: 2.7rem;
+    height: 2.7rem;
+    border: 1px solid var(--line);
+    color: var(--accent-ink);
+    background: var(--bg-dim);
+  }
+  .facet__title { margin-bottom: 0.5rem; }
+  .facet__text { font-size: 0.97rem; color: var(--body-c); }
+
+  .about__quote {
+    margin-top: clamp(3rem, 7vw, 5.5rem);
+    padding: clamp(2rem, 5vw, 3.5rem) clamp(1.6rem, 5vw, 4rem);
+    border-left: 3px solid var(--gold);
+    background: var(--bg-dim);
+    position: relative;
+  }
+  .about__quote-node {
+    position: absolute;
+    top: -4px;
+    left: -8px;
+    width: 9px;
+    height: 9px;
+    transform: rotate(45deg);
+    background: var(--gold);
+  }
+  .about__quote-line {
+    font-family: var(--font-display);
+    font-weight: 540;
+    font-size: clamp(1.7rem, 1.2rem + 2.4vw, 3rem);
+    line-height: 1.15;
+    color: var(--heading);
+    max-width: 24ch;
+  }
+  .about__quote-caption {
+    margin-top: 1.1rem;
+    font-size: 0.85rem;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--gold-ink);
+  }
+
+  @media (max-width: 62rem) {
+    .about__grid { grid-template-columns: 1fr; }
+  }
+  @media (max-width: 44rem) {
+    .about__facets { grid-template-columns: 1fr; }
+  }
+</style>

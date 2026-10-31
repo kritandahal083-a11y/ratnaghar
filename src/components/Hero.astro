@@ -1,0 +1,265 @@
+---
+import Icon from './Icon.astro';
+---
+
+<section class="hero theme-dark" id="home" aria-label="Introduction">
+  <div class="hero__grid container" aria-hidden="true"></div>
+  <div class="hero__glow" aria-hidden="true"></div>
+
+  <div class="container hero__in">
+    <div class="hero__copy">
+
+      <p class="hero__eyebrow" data-reveal>
+        IT Solutions <span class="hero__eyebrow-sep" aria-hidden="true"></span> Digital Advertising
+      </p>
+
+      <h1 class="display-1" data-reveal style="--d:.08s">
+        Building the Future<br class="h1-br" />{' '}of Digital Business.
+      </h1>
+
+      <p class="hero__lead" data-reveal style="--d:.16s">
+        From innovative technology solutions to powerful digital advertising, Shree Ratna Ghar helps
+        businesses grow, connect, and lead in the digital world.
+      </p>
+
+      <div class="hero__actions" data-reveal style="--d:.24s">
+        <a class="btn btn--gold" href="#services">
+          Explore Our Services
+          <Icon class="icon-arrow" name="ph:arrow-right" size={17} />
+        </a>
+        <a class="btn btn--ghost-light" href="#contact">Start a Project</a>
+      </div>
+
+    </div>
+
+    <div class="hero__art" data-reveal style="--d:.2s">
+      <!-- Digital crest: orbit, compass, network — drawn, not stock. -->
+      <svg class="crest" viewBox="0 0 620 620" fill="none" aria-hidden="true">
+        <!-- rings -->
+        <circle class="spin-slow" cx="310" cy="310" r="252" stroke="rgba(212,175,55,.5)" stroke-width="1.5"/>
+        <circle cx="310" cy="310" r="186" stroke="rgba(240,246,255,.14)" stroke-width="1"/>
+        <circle cx="310" cy="310" r="120" stroke="rgba(212,175,55,.26)" stroke-width="1"/>
+
+        <!-- outer ticks (24 × 15°) -->
+        <g class="spin-slower" stroke="rgba(240,246,255,.22)" stroke-width="1">
+          {Array.from({ length: 24 }).map((_, i) => {
+            const a = (i * 15 * Math.PI) / 180;
+            const x1 = 310 + 244 * Math.cos(a), y1 = 310 + 244 * Math.sin(a);
+            const x2 = 310 + 252 * Math.cos(a), y2 = 310 + 252 * Math.sin(a);
+            const long = i % 6 === 0;
+            const x3 = 310 + (long ? 230 : 240) * Math.cos(a);
+            const y3 = 310 + (long ? 230 : 240) * Math.sin(a);
+            return <line x1={x1} y1={y1} x2={x3} y2={y3} opacity={long ? 0.5 : 0.3}/>;
+          })}
+        </g>
+
+        <!-- cross axes -->
+        <g stroke="rgba(240,246,255,.09)" stroke-width="1">
+          <line x1="310" y1="38" x2="310" y2="582"/>
+          <line x1="38" y1="310" x2="582" y2="310"/>
+          <line x1="114" y1="114" x2="506" y2="506" stroke-dasharray="2 10"/>
+          <line x1="506" y1="114" x2="114" y2="506" stroke-dasharray="2 10"/>
+        </g>
+
+        <!-- gold arc sweep -->
+        <path d="M 310 58 A 252 252 0 0 1 491 116" stroke="#D4AF37" stroke-width="3" stroke-linecap="round"/>
+
+        <!-- network: nodes + connections -->
+        <g>
+          <polyline
+            points="310,58 550,310 435,563 96,436 82,204 310,58"
+            stroke="rgba(240,246,255,.14)" stroke-width="1"/>
+          <circle cx="310" cy="58" r="6" fill="#D4AF37"/>
+          <circle cx="550" cy="310" r="6" fill="#D4AF37"/>
+          <circle cx="435" cy="563" r="5" fill="#3E6FB8"/>
+          <circle cx="96" cy="436" r="5" fill="#3E6FB8"/>
+          <circle cx="82" cy="204" r="5" fill="#D4AF37"/>
+          <circle cx="310" cy="440" r="4.5" fill="#D4AF37"/>
+          <circle cx="497" cy="437" r="4" fill="rgba(240,246,255,.55)"/>
+          <circle cx="141" cy="204" r="4" fill="rgba(240,246,255,.55)"/>
+        </g>
+
+        <!-- inner compass diamond -->
+        <g class="pulse">
+          <path d="M310 268 L352 310 L310 352 L268 310 Z" stroke="#D4AF37" stroke-width="1.6"/>
+          <circle cx="310" cy="310" r="4" fill="#D4AF37"/>
+        </g>
+
+        <!-- orbiting satellite -->
+        <g class="orbit">
+          <circle cx="310" cy="58" r="5" fill="#E3C567"/>
+          <circle cx="310" cy="58" r="11" stroke="rgba(212,175,55,.35)" stroke-width="1.5" fill="none"/>
+        </g>
+      </svg>
+    </div>
+  </div>
+
+  <div class="hero__ground container" aria-hidden="true">
+    <span class="hero__ground-line"></span>
+  </div>
+</section>
+
+<style>
+  .hero {
+    position: relative;
+    background: var(--navy-900);
+    color: var(--body-c);
+    overflow: hidden;
+    min-height: max(39rem, calc(100svh - var(--header-h)));
+    display: grid;
+    align-items: center;
+    padding-block: clamp(3rem, 7vh, 5.5rem) clamp(2.8rem, 6vh, 4.5rem);
+    isolation: isolate;
+  }
+
+  /* faint blueprint grid */
+  .hero__grid {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    z-index: 0;
+    background-image:
+      linear-gradient(rgba(240, 246, 255, 0.035) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(240, 246, 255, 0.035) 1px, transparent 1px);
+    background-size: 7.5rem 7.5rem;
+    mask-image: linear-gradient(180deg, #000 60%, transparent);
+  }
+  .hero__glow {
+    position: absolute;
+    z-index: 0;
+    top: -20%;
+    right: -12%;
+    width: 60vw;
+    height: 60vw;
+    background: radial-gradient(closest-side, rgba(212, 175, 55, 0.1), transparent 70%);
+  }
+
+  .hero__in {
+    position: relative;
+    z-index: 1;
+    display: grid;
+    grid-template-columns: minmax(0, 1.15fr) minmax(0, 0.85fr);
+    align-items: center;
+    gap: clamp(2rem, 5vw, 5rem);
+  }
+
+  .hero__eyebrow {
+    display: flex;
+    align-items: center;
+    gap: 0.8rem;
+    font-size: 0.8rem;
+    font-weight: 560;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--gold);
+  }
+  .hero__eyebrow-sep {
+    width: 3px;
+    height: 3px;
+    transform: rotate(45deg);
+    background: rgba(240, 246, 255, 0.5);
+  }
+
+  .hero__copy h1 {
+    margin: 1.5rem 0 1.4rem;
+    color: #F2F7FD;
+    text-wrap: wrap; /* balance fights the forced <br> and adds lines */
+  }
+  .hero__lead {
+    max-width: 46ch;
+    font-size: 1.08rem;
+    color: #B9C8DC;
+  }
+  .hero__actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.9rem;
+    margin-top: 2.3rem;
+  }
+
+  /* ---- Crest art ---- */
+  .hero__art {
+    position: relative;
+    align-self: stretch;
+    display: grid;
+    align-items: center;
+  }
+  .crest {
+    width: 100%;
+    min-width: 26rem;
+    height: auto;
+    translate: 4% 0;
+  }
+
+  .spin-slow,
+  .spin-slower {
+    transform-origin: 310px 310px;
+    animation: spin 70s linear infinite;
+  }
+  .spin-slower { animation-duration: 130s; animation-direction: reverse; opacity: 0.8; }
+
+  .orbit {
+    transform-origin: 310px 310px;
+    animation: spin 26s linear infinite;
+  }
+  .pulse {
+    transform-origin: 310px 310px;
+    animation: pulse 5.2s var(--ease) infinite;
+  }
+
+  @keyframes spin { to { transform: rotate(360deg); } }
+  @keyframes pulse {
+    0%, 100% { opacity: 1; transform: scale(1); }
+    50% { opacity: 0.75; transform: scale(1.05); }
+  }
+
+  .hero__ground {
+    position: relative;
+    z-index: 1;
+    margin-top: clamp(2.5rem, 6vh, 4rem);
+  }
+  .hero__ground-line {
+    display: block;
+    height: 1px;
+    background: linear-gradient(90deg, var(--gold), rgba(212, 175, 55, 0.06) 55%);
+  }
+  .h1-br { display: none; }
+  @media (min-width: 62rem) {
+    .h1-br { display: inline; }
+  }
+
+  /* Guard against pathological viewport heights (kiosk/print-like setups):
+     never let the hero exceed a sane height. */
+  @media (min-height: 2400px) {
+    .hero { min-height: 42rem; }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .spin-slow, .spin-slower, .orbit, .pulse { animation: none; }
+  }
+
+  /* ---- Responsive: crest recedes, copy breathes ---- */
+  @media (max-width: 75rem) {
+    .crest { min-width: 0; width: min(44vw, 34rem); }
+  }
+
+  @media (max-width: 62rem) {
+    .hero { display: block; }
+    .hero__in {
+      grid-template-columns: 1fr;
+      gap: 0;
+      padding-top: clamp(1rem, 4vh, 3rem);
+    }
+    .hero__art {
+      order: 2;
+      margin-top: clamp(1rem, 5vh, 3rem);
+      justify-content: center;
+    }
+    .crest { width: min(24rem, 78vw); translate: 0; }
+    .hero__ground { margin-top: 0.5rem; }
+  }
+
+  @media (max-width: 30rem) {
+    .hero__actions .btn { width: 100%; justify-content: center; }
+  }
+</style>

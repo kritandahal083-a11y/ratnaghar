@@ -1,0 +1,289 @@
+---
+import Icon from './Icon.astro';
+import { ALL_SERVICES } from '../data/services';
+import { CONTACT } from '../data/site';
+---
+
+<section class="contact" id="contact">
+  <div class="container contact__in">
+    <div class="contact__aside" data-reveal>
+      <div class="rule" aria-hidden="true"></div>
+      <h2 class="display-2">Tell us about your project.</h2>
+      <p class="contact__lead">
+        The more we know about goals, timelines, and constraints, the more useful our first reply
+        will be.
+      </p>
+
+      <ul class="contact__channels">
+        <li>
+          <span class="contact__ch-label">Email</span>
+          <a class="contact__ch-link" href={`mailto:${CONTACT.email}`}>
+            {CONTACT.email}
+            <Icon class="icon-arrow" name="ph:arrow-up-right" size={14} />
+          </a>
+        </li>
+        <li>
+          <span class="contact__ch-label">WhatsApp</span>
+          <a class="contact__ch-link" href={CONTACT.whatsapp} target="_blank" rel="noopener">
+            Message us directly
+            <Icon class="icon-arrow" name="ph:arrow-up-right" size={14} />
+          </a>
+        </li>
+        <li>
+          <span class="contact__ch-label">Phone</span>
+          <a class="contact__ch-link" href={CONTACT.phoneHref}>{CONTACT.phoneDisplay}</a>
+        </li>
+        <li>
+          <span class="contact__ch-label">Office</span>
+          <span class="contact__ch-text">{CONTACT.address}</span>
+        </li>
+      </ul>
+      <p class="contact__placeholder-note">
+        Contact entries above are placeholders — swap in your real details before launch.
+      </p>
+    </div>
+
+    <form class="contact__form" id="contact-form" novalidate data-email={CONTACT.email} data-reveal style="--d:.12s">
+      <div class="field field--half">
+        <label for="f-name">Full Name</label>
+        <input id="f-name" name="name" type="text" autocomplete="name" required />
+      </div>
+      <div class="field field--half">
+        <label for="f-email">Email Address</label>
+        <input id="f-email" name="email" type="email" autocomplete="email" required />
+      </div>
+      <div class="field field--half">
+        <label for="f-company">Company Name</label>
+        <input id="f-company" name="company" type="text" autocomplete="organization" />
+      </div>
+      <div class="field field--half">
+        <label for="f-service">Service Required</label>
+        <select id="f-service" name="service" required>
+          <option value="" selected disabled>Select a service</option>
+          {ALL_SERVICES.map((s) => <option value={s.name}>{s.name}</option>)}
+          <option value="Not sure yet">Not sure yet — advise me</option>
+        </select>
+      </div>
+      <div class="field">
+        <label for="f-details">Project Details</label>
+        <textarea
+          id="f-details"
+          name="details"
+          rows="6"
+          placeholder="What are you building or growing? Current situation, goals, timeline — anything you'd tell us in a kickoff meeting."
+      ></textarea>
+      </div>
+
+      <div class="contact__submit-row">
+        <button class="btn btn--gold btn--wide" type="submit">Submit inquiry</button>
+        <p class="contact__honest">
+          This site is fully static — nothing is stored or sent from the server. Submitting opens
+          your own email app with the message prefilled, addressed to {CONTACT.email}. You edit it
+          there, then send it yourself.
+        </p>
+      </div>
+      <p class="contact__status" id="form-status" role="status" aria-live="polite"></p>
+    </form>
+  </div>
+</section>
+
+<style>
+  .contact {
+    background: var(--navy-900);
+    padding-block: clamp(4.5rem, 9vw, 7.5rem);
+  }
+  .contact__in {
+    display: grid;
+    grid-template-columns: minmax(0, 0.95fr) minmax(0, 1.05fr);
+    gap: clamp(2.5rem, 6vw, 6rem);
+  }
+
+
+  .contact__aside h2 { max-width: 18ch; }
+  .contact__lead {
+    margin-top: 1.4rem;
+    max-width: 42ch;
+    color: var(--muted-c);
+  }
+
+  .contact__channels {
+    margin-top: 2.6rem;
+    display: grid;
+    gap: 1.1rem;
+  }
+  .contact__channels li {
+    display: grid;
+    grid-template-columns: 5.2rem 1fr;
+    align-items: baseline;
+    gap: 1rem;
+    padding-top: 1.1rem;
+    border-top: 1px solid var(--line);
+  }
+  .contact__ch-label {
+    font-size: 0.75rem;
+    font-weight: 600;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--muted-c);
+  }
+  .contact__ch-link,
+  .contact__ch-text {
+    color: #E6EDF6;
+    text-decoration: none;
+    font-size: 1.02rem;
+  }
+  .contact__ch-link { display: inline-flex; align-items: center; gap: 0.4rem; transition: color 0.25s var(--ease); }
+  .contact__ch-link:hover { color: var(--gold); }
+  .contact__ch-link .icon-arrow { opacity: 0.65; }
+  .contact__placeholder-note {
+    margin-top: 1.2rem;
+    font-size: 0.8rem;
+    color: var(--muted-c);
+    opacity: 0.8;
+  }
+
+  /* ---- Form ---- */
+  .contact__form {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1.6rem 1.6rem;
+    align-content: start;
+    padding: clamp(1.7rem, 3.5vw, 2.8rem);
+    background: var(--navy-800);
+    border: 1px solid rgba(240, 246, 255, 0.12);
+  }
+  .field { display: grid; gap: 0.55rem; }
+  .field--half { grid-column: auto; }
+  .field:not(.field--half) { grid-column: 1 / -1; }
+
+  .field label {
+    font-size: 0.82rem;
+    font-weight: 620;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: #93A7C0;
+  }
+  #f-service option { color: #0B1F3A; }
+
+  .field input,
+  .field select,
+  .field textarea {
+    width: 100%;
+    padding: 0.85rem 0.9rem;
+    background: transparent;
+    border: 1px solid rgba(240, 246, 255, 0.25);
+    border-left: 2px solid rgba(240, 246, 255, 0.25);
+    color: #F2F7FD;
+    transition: border-color 0.3s var(--ease);
+  }
+  .field input::placeholder,
+  .field textarea::placeholder { color: #6E82A0; }
+
+  .field input:hover,
+  .field select:hover,
+  .field textarea:hover { border-color: rgba(240, 246, 255, 0.45); }
+  .field input:focus-visible,
+  .field select:focus-visible,
+  .field textarea:focus-visible {
+    outline: none;
+    border-color: var(--gold);
+    border-left-color: var(--gold);
+  }
+  .field input[aria-invalid='true'],
+  .field select[aria-invalid='true'] {
+    border-color: #E36C5B;
+  }
+  .field textarea { resize: vertical; min-height: 9.5rem; }
+
+  .contact__submit-row {
+    grid-column: 1 / -1;
+    display: flex;
+    align-items: center;
+    gap: 1.6rem;
+    flex-wrap: wrap;
+  }
+  .btn--wide { min-width: 16rem; justify-content: center; }
+  .contact__honest {
+    flex: 1 1 18rem;
+    font-size: 0.83rem;
+    line-height: 1.55;
+    color: var(--muted-c);
+  }
+
+  .contact__status {
+    grid-column: 1 / -1;
+    min-height: 1.4rem;
+    font-size: 0.92rem;
+    color: var(--gold);
+  }
+  .contact__status[data-error] { color: #E36C5B; }
+
+  @media (max-width: 62rem) {
+    .contact__in { grid-template-columns: 1fr; }
+  }
+  @media (max-width: 40rem) {
+    .contact__form { grid-template-columns: 1fr; }
+    .field--half { grid-column: 1 / -1; }
+    .btn--wide { width: 100%; }
+  }
+</style>
+
+<script>
+  const form = document.getElementById('contact-form') as HTMLFormElement | null;
+  const status = document.getElementById('form-status');
+
+  form?.addEventListener('submit', (e) => {
+    e.preventDefault(); /* static site: no storage, no server call */
+
+    const contactEmail = form.dataset.email ?? '';
+
+    const controls = Array.from(
+      form.elements
+    ).filter(
+      (el): el is HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement =>
+        el instanceof HTMLInputElement ||
+        el instanceof HTMLSelectElement ||
+        el instanceof HTMLTextAreaElement
+    );
+
+    let valid = true;
+    for (const el of controls) {
+      const ok = el.checkValidity();
+      el.setAttribute('aria-invalid', String(!ok));
+      if (!ok) valid = false;
+    }
+
+    if (!valid) {
+      const firstBad = controls.find((el) => el.getAttribute('aria-invalid') === 'true');
+      if (status) {
+        status.setAttribute('data-error', '');
+        status.textContent = 'Please complete the highlighted fields before submitting.';
+      }
+      firstBad?.focus();
+      return;
+    }
+
+    const data = new FormData(form);
+    const service = String(data.get('service') || '');
+    const lines = [
+      `Name: ${data.get('name')}`,
+      `Email: ${data.get('email')}`,
+      `Company: ${data.get('company') || '—'}`,
+      `Service: ${service}`,
+      '',
+      String(data.get('details') || ''),
+    ];
+    const subject = `Project inquiry — ${service || 'general'}`;
+    const body = lines.join('\n');
+    const url = `mailto:${contactEmail}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+    window.location.href = url;
+
+    if (status) {
+      status.removeAttribute('data-error');
+      status.textContent =
+        'Your email app should open with everything prefilled. If it doesn’t, write us directly at ' +
+        contactEmail +
+        '.';
+    }
+  });
+</script>

@@ -1,0 +1,331 @@
+---
+import Icon from './Icon.astro';
+import CoverArt from './CoverArt.astro';
+import { PROJECTS, CATEGORY_ORDER, type ProjectCategory } from '../data/work';
+---
+
+<section class="work bg-dim" id="work">
+  <div class="container">
+    <div class="work__head" data-reveal>
+      <p class="label">Selected concepts</p>
+      <div class="work__head-row">
+        <h2 class="display-2">Work that sets a standard.</h2>
+        <div class="work__filters" role="group" aria-label="Filter projects by discipline">
+          <button class="work__filter is-active" data-filter="all" aria-pressed="true">All</button>
+          {
+            CATEGORY_ORDER.map((cat: ProjectCategory) => (
+              <button class="work__filter" data-filter={cat} aria-pressed="false">
+                {cat}
+              </button>
+            ))
+          }
+        </div>
+      </div>
+      <p class="work__note">
+        Demonstration projects designed by Shree Ratna Ghar to show our standard — not client engagements,
+        and shown without owned metrics. Detailed walkthroughs available on request.
+      </p>
+    </div>
+
+    <div class="work__grid">
+      {
+        PROJECTS.map((p, i) => (
+          <div class={`work-card work-card--${p.id}`} data-cat={p.category} data-reveal style={`--d:${i * 0.07}s`}>
+            <button
+              class="work-card__hit"
+              data-open={`dlg-${p.id}`}
+              aria-haspopup="dialog"
+              aria-label={`Open details for demo project ${p.name}`}
+            >
+              <CoverArt project={p} />
+              <span class="work-card__arrow" aria-hidden="true">
+                <Icon name="ph:arrow-up-right" size={20} />
+              </span>
+            </button>
+            <div class="work-card__meta">
+              <p class="work-card__cat">{p.category} · Demo concept</p>
+              <h3 class="work-card__name">{p.name}</h3>
+              <p class="work-card__pitch">{p.pitch}</p>
+            </div>
+          </div>
+        ))
+      }
+    </div>
+  </div>
+</section>
+
+<!-- Project detail dialogs -->
+{
+  PROJECTS.map((p) => (
+    <dialog class="pdlg" id={`dlg-${p.id}`} aria-labelledby={`dlg-${p.id}-title`}>
+      <div class="pdlg__head">
+        <CoverArt project={p} compact class="modal-cover" />
+      </div>
+      <div class="pdlg__body">
+        <div class="pdlg__kicker">
+          <span class="tag">{p.category}</span>
+          <span class="pdlg__demo">Demo concept</span>
+        </div>
+        <h3 class="display-3" id={`dlg-${p.id}-title`}>{p.name}</h3>
+        <p class="pdlg__brief">{p.brief}</p>
+        <div class="pdlg__foot">
+          <ul class="pdlg__scope">
+            <li class="pdlg__scope-label">Scope</li>
+            {p.scope.map((s) => (
+              <li>{s}</li>
+            ))}
+          </ul>
+          <a class="btn btn--gold btn--sm" href="#contact" data-service={p.category === 'Advertising' ? 'Digital Advertising' : p.category === 'Campaign' ? 'Digital Marketing' : p.category === 'Web App' ? 'Software Development' : p.category === 'Branding' ? 'Branding & Graphic Design' : 'Web Development'} data-close-dialog>
+            Start something like this
+            <Icon class="icon-arrow" name="ph:arrow-right" size={15} />
+          </a>
+        </div>
+        <button class="pdlg__close" data-close aria-label="Close project details">
+          <Icon name="ph:x" size={20} />
+        </button>
+      </div>
+    </dialog>
+  ))
+}
+
+<style>
+  .work { padding-block: var(--sec-y); }
+
+  .work__head .label { margin-bottom: 1.1rem; }
+  .work__head-row {
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    gap: 2rem;
+    flex-wrap: wrap;
+  }
+
+  .work__filters { display: flex; flex-wrap: wrap; gap: 1.3rem; }
+  .work__filter {
+    font-size: 0.92rem;
+    font-weight: 560;
+    letter-spacing: 0.03em;
+    color: var(--muted-c);
+    padding-bottom: 0.35rem;
+    border-bottom: 2px solid transparent;
+    transition: color 0.25s var(--ease), border-color 0.25s var(--ease);
+  }
+  .work__filter:hover { color: var(--heading); }
+  .work__filter.is-active {
+    color: var(--heading);
+    border-color: var(--gold);
+  }
+
+  .work__note {
+    margin-top: 1.2rem;
+    max-width: 62ch;
+    font-size: 0.9rem;
+    color: var(--muted-c);
+  }
+
+  /* ---- Asymmetric editorial grid ---- */
+  .work__grid {
+    margin-top: clamp(2.8rem, 5vw, 4.2rem);
+    display: grid;
+    grid-template-columns: repeat(6, 1fr);
+    gap: clamp(1.4rem, 2.6vw, 2.4rem);
+  }
+  .work-card { grid-column: span 2; }
+  .work-card--velora { grid-column: span 3; }
+  .work-card--nova { grid-column: span 3; }
+
+  .work-card.is-hidden { display: none; }
+
+  .work-card__hit {
+    position: relative;
+    display: block;
+    width: 100%;
+    text-align: left;
+  }
+  .work-card__arrow {
+    position: absolute;
+    top: 1rem;
+    right: 1rem;
+    width: 2.5rem;
+    height: 2.5rem;
+    display: grid;
+    place-items: center;
+    background: rgba(7, 20, 38, 0.82);
+    color: var(--gold);
+    opacity: 0;
+    translate: 6px -6px;
+    transition: opacity 0.35s var(--ease), translate 0.35s var(--ease);
+  }
+  .work-card__hit:hover .work-card__arrow,
+  .work-card__hit:focus-visible .work-card__arrow {
+    opacity: 1;
+    translate: 0 0;
+  }
+
+  .work-card__meta { padding-top: 1.1rem; }
+  .work-card__cat {
+    font-size: 0.72rem;
+    font-weight: 620;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--gold-ink);
+    margin-bottom: 0.35rem;
+  }
+  .work-card__name {
+    font-family: var(--font-display);
+    font-size: 1.18rem;
+    font-weight: 600;
+    color: var(--heading);
+  }
+  .work-card__pitch {
+    margin-top: 0.45rem;
+    font-size: 0.92rem;
+    line-height: 1.6;
+    color: var(--muted-c);
+    max-width: 52ch;
+  }
+
+  /* ---- Dialog ---- */
+  .pdlg {
+    width: min(100% - 2rem, 44rem);
+    max-height: min(90dvh, 60rem);
+    padding: 0;
+    border: 1px solid var(--line-strong);
+    background: var(--white);
+    color: var(--body-c);
+    overflow: auto;
+  }
+  .pdlg::backdrop {
+    background: rgba(7, 20, 38, 0.7);
+    backdrop-filter: blur(3px);
+  }
+  .pdlg__head :global(.cover) { aspect-ratio: 21/9; }
+  .pdlg__body {
+    position: relative;
+    padding: clamp(1.6rem, 4vw, 2.6rem);
+  }
+  .pdlg__kicker {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 1.2rem;
+  }
+  .pdlg__demo {
+    font-size: 0.75rem;
+    font-weight: 600;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--gold-ink);
+  }
+  .pdlg__brief {
+    margin-top: 1rem;
+    font-size: 1rem;
+    line-height: 1.7;
+  }
+  .pdlg__foot {
+    margin-top: 1.8rem;
+    padding-top: 1.5rem;
+    border-top: 1px solid var(--line);
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    gap: 1.5rem;
+    flex-wrap: wrap;
+  }
+  .pdlg__scope {
+    display: grid;
+    gap: 0.4rem;
+  }
+  .pdlg__scope-label {
+    font-size: 0.75rem;
+    font-weight: 700;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--muted-c);
+    margin-bottom: 0.15rem;
+  }
+  .pdlg__scope li:not(.pdlg__scope-label) {
+    position: relative;
+    padding-left: 1.15rem;
+    font-size: 0.93rem;
+  }
+  .pdlg__scope li:not(.pdlg__scope-label)::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0.55em;
+    width: 5px;
+    height: 5px;
+    transform: rotate(45deg);
+    background: var(--gold);
+  }
+  .pdlg__close {
+    position: absolute;
+    top: 0.9rem;
+    right: 0.9rem;
+    width: 2.5rem;
+    height: 2.5rem;
+    display: grid;
+    place-items: center;
+    border: 1px solid var(--line-strong);
+    color: var(--heading);
+    background: var(--white);
+    transition: background-color 0.25s var(--ease), color 0.25s var(--ease);
+  }
+  .pdlg__close:hover {
+    background: var(--navy-800);
+    color: var(--gold);
+  }
+
+  @media (max-width: 62rem) {
+    .work__grid { grid-template-columns: repeat(2, 1fr); }
+    .work-card,
+    .work-card--velora,
+    .work-card--nova { grid-column: span 2; }
+  }
+    @media (max-width: 44rem) {
+    .work__grid { grid-template-columns: 1fr; }
+    .work-card,
+    .work-card--velora,
+    .work-card--nova { grid-column: auto; }
+  }
+</style>
+
+<script>
+  const root = document.getElementById('work');
+
+  /* --- Filters --- */
+  const cards = Array.from(root?.querySelectorAll<HTMLElement>('.work-card') ?? []);
+  root?.addEventListener('click', (e) => {
+    const filterBtn = (e.target as HTMLElement).closest<HTMLButtonElement>('.work__filter');
+    if (filterBtn) {
+      const value = filterBtn.dataset.filter;
+      root.querySelectorAll('.work__filter').forEach((b) => {
+        const active = b === filterBtn;
+        b.classList.toggle('is-active', active);
+        (b as HTMLButtonElement).setAttribute('aria-pressed', String(active));
+      });
+      cards.forEach((card) => {
+        const show = value === 'all' || card.dataset.cat === value;
+        card.classList.toggle('is-hidden', !show);
+      });
+      return;
+    }
+
+    /* --- Dialog open --- */
+    const opener = (e.target as HTMLElement).closest<HTMLElement>('[data-open]');
+    if (opener) {
+      const dlg = document.getElementById(opener.dataset.open ?? '');
+      dlg?.showModal();
+    }
+  });
+
+  /* --- Dialog close (button, backdrop, or navigation link) --- */
+  document.querySelectorAll<HTMLDialogElement>('dialog.pdlg').forEach((dlg) => {
+    dlg.addEventListener('click', (e) => {
+      const target = e.target as HTMLElement;
+      if (target === dlg) dlg.close();
+      if (target.closest('[data-close]') || target.closest('[data-close-dialog]')) dlg.close();
+    });
+  });
+</script>

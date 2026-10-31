@@ -1,0 +1,88 @@
+---
+import Icon from './Icon.astro';
+import { STRENGTHS } from '../data/strengths';
+---
+
+<section class="why bg-dim section" id="why">
+  <div class="container why__grid">
+    <div class="why__aside">
+      <div data-reveal>
+        <div class="rule" aria-hidden="true"></div>
+        <h2 class="display-2">Why Businesses Choose <span class="why__brand">Shree Ratna Ghar.</span></h2>
+        <p class="why__lead">
+          The honest version: we only stay interesting if it shows up in your numbers. These are
+          the six habits that produce those numbers.
+        </p>
+        <a class="link-more" href="#work">
+          See the standard for yourself
+          <Icon class="icon-arrow" name="ph:arrow-right" size={15} />
+        </a>
+      </div>
+    </div>
+
+    <ul class="why__list">
+      {
+        STRENGTHS.map((s, i) => (
+          <li class="strength" data-reveal style={`--d:${i * 0.06}s`}>
+            <span class="strength__icon">
+              <Icon name={s.icon} size={22} />
+            </span>
+            <div>
+              <h3 class="display-3 strength__title">{s.title}</h3>
+              <p class="strength__text">{s.text}</p>
+            </div>
+          </li>
+        ))
+      }
+    </ul>
+  </div>
+</section>
+
+<style>
+  .why__grid {
+    display: grid;
+    grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.1fr);
+    gap: clamp(2.5rem, 6vw, 6rem);
+    align-items: start;
+  }
+
+  .why__aside { position: sticky; top: calc(var(--header-h) + 3rem); }
+  .why__aside h2 { max-width: 22ch; }
+  .why__brand { white-space: nowrap; }
+  .why__lead {
+    margin: 1.4rem 0 1.6rem;
+    max-width: 40ch;
+    color: var(--muted-c);
+  }
+
+  .why__list {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0 2.6rem;
+  }
+  .strength {
+    display: flex;
+    gap: 1.1rem;
+    padding: 1.55rem 0;
+    border-top: 1px solid var(--line);
+    align-items: flex-start;
+  }
+  .strength__icon {
+    flex-shrink: 0;
+    display: grid;
+    place-items: center;
+    width: 2.7rem;
+    height: 2.7rem;
+    border: 1px solid var(--line-strong);
+    color: var(--royal);
+    background: var(--white);
+  }
+  .strength__title { margin-bottom: 0.5rem; }
+  .strength__text { font-size: 0.94rem; line-height: 1.6; }
+
+  @media (max-width: 68rem) {
+    .why__grid { grid-template-columns: 1fr; }
+    .why__aside { position: static; }
+    .why__list { grid-template-columns: 1fr; gap: 0; }
+  }
+</style>

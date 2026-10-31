@@ -1,0 +1,164 @@
+---
+import { PROCESS_STEPS } from '../data/process';
+---
+
+<section class="process theme-dark" id="process">
+  <div class="container">
+    <div class="process__head" data-reveal>
+      <div class="rule" aria-hidden="true"></div>
+      <h2 class="display-2">A process you can plan around.</h2>
+      <p class="process__lead">
+        Six steps, one continuous thread — from the first conversation to compounding growth. You
+        always know which knot we're untangling next.
+      </p>
+    </div>
+
+    <ol class="process__grid" data-reveal-steps aria-label="Project process, from discovery to growth">
+      {
+        PROCESS_STEPS.map((step) => (
+          <li class="step">
+            <span class="step__no">{step.no}</span>
+            <h3 class="step__title">{step.title}</h3>
+            <p class="step__text">{step.text}</p>
+          </li>
+        ))
+      }
+    </ol>
+  </div>
+</section>
+
+<style>
+  .process { padding-block: var(--sec-y); }
+
+  .process__head h2 { max-width: 20ch; }
+  .process__lead {
+    margin-top: 1.4rem;
+    max-width: 52ch;
+    color: var(--muted-c);
+  }
+
+  .process__grid {
+    position: relative;
+    margin-top: clamp(3.5rem, 7vw, 6rem);
+    display: grid;
+    grid-template-columns: repeat(6, minmax(0, 1fr));
+    gap: clamp(1.4rem, 2.6vw, 2.4rem);
+    counter-reset: step;
+  }
+
+  /* ---- The Golden Thread (brand motif: gold rules + gem nodes) ---- */
+  .process__grid::before {
+    content: '';
+    position: absolute;
+    top: 7px;
+    left: 0;
+    right: 0;
+    height: 2px;
+    background: linear-gradient(90deg, var(--gold) 0%, rgba(212, 175, 55, 0.55) 78%, transparent);
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform 1.4s var(--ease) 0.25s;
+  }
+  .process__grid.is-drawn::before { transform: scaleX(1); }
+
+  .step {
+    position: relative;
+    padding-top: 2.6rem;
+  }
+  .step::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 13px;
+    height: 13px;
+    transform: rotate(45deg);
+    background: var(--navy-900);
+    border: 2px solid var(--gold);
+    transition: background-color 0.4s var(--ease) 0.5s, border-color 0.4s var(--ease);
+  }
+  .step:first-child::before { background: var(--gold); }
+  @media (prefers-reduced-motion: no-preference) {
+    .js .step { opacity: 0; transform: translateY(18px); transition: opacity 0.6s var(--ease), transform 0.6s var(--ease); }
+    .js .process__grid.is-drawn .step { opacity: 1; transform: none; }
+    .js .process__grid.is-drawn .step:nth-child(1) { transition-delay: 0.15s; }
+    .js .process__grid.is-drawn .step:nth-child(2) { transition-delay: 0.35s; }
+    .js .process__grid.is-drawn .step:nth-child(3) { transition-delay: 0.55s; }
+    .js .process__grid.is-drawn .step:nth-child(4) { transition-delay: 0.75s; }
+    .js .process__grid.is-drawn .step:nth-child(5) { transition-delay: 0.95s; }
+    .js .process__grid.is-drawn .step:nth-child(6) { transition-delay: 1.15s; }
+  }
+
+  .step__no {
+    display: block;
+    font-family: var(--font-display);
+    font-size: 0.95rem;
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    color: var(--gold);
+  }
+  .step__title {
+    margin-top: 0.55rem;
+    font-family: var(--font-display);
+    font-size: clamp(1.25rem, 1.1rem + 0.6vw, 1.55rem);
+    font-weight: 570;
+    color: var(--heading);
+  }
+  .step__text {
+    margin-top: 0.6rem;
+    font-size: 0.92rem;
+    line-height: 1.6;
+    color: var(--muted-c);
+  }
+
+  /* ---- Vertical thread on compact screens ---- */
+  @media (max-width: 56rem) {
+    .process__grid {
+      grid-template-columns: 1fr;
+      gap: 2rem;
+      padding-left: 2.2rem;
+    }
+    .process__grid::before {
+      top: 0;
+      bottom: 0;
+      left: 6px;
+      right: auto;
+      height: auto;
+      width: 2px;
+      background: linear-gradient(180deg, var(--gold) 0%, rgba(212, 175, 55, 0.55) 85%, transparent);
+      transform: scaleY(0);
+      transform-origin: top;
+    }
+    .process__grid.is-drawn::before { transform: scaleY(1); }
+    .step {
+      padding-top: 0;
+      padding-left: 0.8rem;
+    }
+    .step::before {
+      left: -2.2rem;
+      top: 0.42rem;
+      margin-left: -0.5px;
+    }
+  }
+</style>
+
+<script>
+  const grid = document.querySelector<HTMLElement>('[data-reveal-steps]');
+  if (grid) {
+    if ('IntersectionObserver' in window) {
+      new IntersectionObserver(
+        (entries, io) => {
+          for (const entry of entries) {
+            if (entry.isIntersecting) {
+              grid.classList.add('is-drawn');
+              io.disconnect();
+            }
+          }
+        },
+        { threshold: 0.35, rootMargin: '0px 0px -10% 0px' }
+      ).observe(grid);
+    } else {
+      grid.classList.add('is-drawn');
+    }
+  }
+</script>

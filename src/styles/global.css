@@ -1,0 +1,322 @@
+/* ============================================================
+   Shree Ratna Ghar — global design system
+   Palette: gold #D4AF37 · deep navy #0B1F3A · royal #164E9B
+            paper #F7F9FC · dark #071426
+   Shape:   radius 0 — sharp corners everywhere (deliberate)
+   ============================================================ */
+
+/* ---- Self-hosted fonts (Fontshare, variable) ---------------- */
+@font-face {
+  font-family: 'Clash Display';
+  src: url('/fonts/clash-display-var.woff2') format('woff2-variations');
+  font-weight: 200 700;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Satoshi';
+  src: url('/fonts/satoshi-var.woff2') format('woff2-variations');
+  font-weight: 300 900;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Satoshi';
+  src: url('/fonts/satoshi-var-italic.woff2') format('woff2-variations');
+  font-weight: 300 900;
+  font-style: italic;
+  font-display: swap;
+}
+
+/* ---- Tokens ------------------------------------------------- */
+:root {
+  /* brand */
+  --gold: #D4AF37;
+  --gold-soft: #E3C567;      /* hover gold */
+  --gold-ink: #8A6A12;       /* gold-family text on light — AA contrast */
+  --navy-900: #071426;
+  --navy-800: #0B1F3A;
+  --navy-700: #12294B;
+  --royal: #164E9B;
+  --royal-soft: #3E6FB8;
+  --paper: #F7F9FC;
+  --white: #FFFFFF;
+
+  /* semantic (light theme default) */
+  --bg: var(--white);
+  --bg-dim: var(--paper);
+  --heading: var(--navy-800);
+  --body-c: #3E4F68;
+  --muted-c: #5B6C86;
+  --line: rgba(11, 31, 58, 0.14);
+  --line-strong: rgba(11, 31, 58, 0.3);
+  --accent: var(--royal);
+  --accent-ink: var(--gold-ink);
+  --focus: var(--navy-800);
+  --header-bg: rgba(7, 20, 38, 0.0);
+
+  /* type */
+  --font-display: 'Clash Display', 'Avenir Next', 'Segoe UI', sans-serif;
+  --font-sans: 'Satoshi', 'Segoe UI', system-ui, sans-serif;
+
+  /* rhythm */
+  --header-h: 4.75rem;
+  --container: 76rem;
+  --gutter: clamp(1.25rem, 4vw, 3rem);
+  --sec-y: clamp(5.5rem, 11vw, 9rem);
+
+  /* motion */
+  --ease: cubic-bezier(0.16, 1, 0.3, 1);
+  --dur: 0.55s;
+
+  /* z-index scale: header 40 · menu 50 · dialogs 60 */
+}
+
+/* Dark theme semantic overrides (applied on themed section wrappers) */
+.theme-dark {
+  --bg: var(--navy-900);
+  --heading: #F2F7FD;
+  --body-c: #C6D3E4;
+  --muted-c: #8FA3BD;
+  --line: rgba(240, 246, 255, 0.14);
+  --line-strong: rgba(240, 246, 255, 0.34);
+  --accent: var(--gold);
+  --accent-ink: var(--gold);
+  --focus: var(--gold);
+  background: var(--bg);
+  color: var(--body-c);
+}
+
+/* ---- Reset -------------------------------------------------- */
+*,
+*::before,
+*::after { box-sizing: border-box; }
+
+html {
+  scroll-behavior: smooth;
+  scroll-padding-top: calc(var(--header-h) + 1rem);
+}
+
+body {
+  margin: 0;
+  font-family: var(--font-sans);
+  font-size: 1.0625rem;
+  line-height: 1.65;
+  color: var(--body-c);
+  background: var(--white);
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+body:has(.menu[data-open]) { overflow: hidden; }
+
+img, svg, video { display: block; max-width: 100%; }
+
+h1, h2, h3, h4, p, ul, ol, figure, blockquote { margin: 0; }
+ul, ol { padding: 0; list-style: none; }
+
+a { color: inherit; }
+button { font: inherit; color: inherit; background: none; border: 0; padding: 0; cursor: pointer; }
+input, select, textarea { font: inherit; }
+
+:focus-visible {
+  outline: 2px solid var(--focus);
+  outline-offset: 3px;
+}
+
+::selection { background: var(--gold); color: var(--navy-900); }
+
+/* ---- Typography --------------------------------------------- */
+.display-1,
+.display-2,
+.display-3 {
+  font-family: var(--font-display);
+  color: var(--heading);
+  text-wrap: balance;
+}
+.display-1 {
+  font-size: clamp(2.55rem, 0.9rem + 3.2vw, 3.85rem);
+  font-weight: 560;
+  line-height: 1.05;
+  letter-spacing: -0.015em;
+}
+.display-2 {
+  font-size: clamp(2rem, 0.9rem + 3.2vw, 3.15rem);
+  font-weight: 550;
+  line-height: 1.1;
+  letter-spacing: -0.01em;
+}
+.display-3 {
+  font-size: clamp(1.3rem, 1.1rem + 0.8vw, 1.65rem);
+  font-weight: 600;
+  line-height: 1.2;
+}
+.lead {
+  font-size: clamp(1.05rem, 0.95rem + 0.45vw, 1.25rem);
+  color: var(--muted-c);
+  max-width: 56ch;
+}
+.label {
+  font-size: 0.78rem;
+  font-weight: 560;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--accent-ink);
+}
+
+/* ---- Layout -------------------------------------------------- */
+.container {
+  width: min(100% - 2 * var(--gutter), var(--container));
+  margin-inline: auto;
+}
+.section { padding-block: var(--sec-y); }
+.section + .section { padding-top: 0; }
+
+.bg-white { background: var(--white); }
+.bg-dim { background: var(--bg-dim); }
+
+/* Section header rhythm (headline + rule motif) */
+.rule {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  margin-bottom: clamp(1.4rem, 3vw, 2.2rem);
+}
+.rule::before {
+  content: '';
+  width: 3rem;
+  height: 2px;
+  background: var(--accent-ink);
+}
+.rule::after {
+  content: '';
+  width: 7px;
+  height: 7px;
+  transform: rotate(45deg);
+  border: 2px solid var(--gold);
+  background: transparent;
+}
+.rule--relative { margin-bottom: 3.5rem; }
+
+/* ---- Buttons (sharp-corner system) --------------------------- */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6rem;
+  padding: 0.95rem 1.7rem;
+  font-weight: 620;
+  font-size: 0.95rem;
+  letter-spacing: 0.02em;
+  line-height: 1;
+  text-decoration: none;
+  border: 1px solid transparent;
+  transition:
+    transform 0.25s var(--ease),
+    background-color 0.25s var(--ease),
+    border-color 0.25s var(--ease),
+    color 0.25s var(--ease);
+}
+.btn:active { transform: translateY(1px); }
+.btn .icon-arrow { transition: transform 0.3s var(--ease); }
+.btn:hover .icon-arrow { transform: translateX(4px); }
+
+.btn--gold {
+  background: var(--gold);
+  color: var(--navy-900);
+}
+.btn--gold:hover { background: var(--gold-soft); }
+
+.btn--navy {
+  background: var(--navy-800);
+  color: var(--white);
+}
+.btn--navy:hover { background: var(--royal); }
+
+.btn--ghost-dark {
+  border-color: var(--line-strong);
+  color: var(--heading);
+}
+.btn--ghost-dark:hover {
+  border-color: var(--gold-ink);
+  color: var(--gold-ink);
+}
+
+.btn--ghost-light {
+  border-color: var(--line-strong);
+  color: var(--heading);
+}
+.btn--ghost-light:hover {
+  border-color: var(--gold);
+  color: var(--gold);
+}
+
+.btn--sm { padding: 0.7rem 1.15rem; font-size: 0.88rem; }
+
+/* ---- Inline text link (chevron underline) --------------------- */
+.link-more {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  font-weight: 600;
+  font-size: 0.95rem;
+  color: var(--accent-ink);
+  text-decoration: none;
+  border-bottom: 1px solid transparent;
+  transition: color 0.25s var(--ease);
+}
+.link-more:hover { border-color: currentColor; }
+.link-more .icon-arrow { transition: transform 0.3s var(--ease); }
+.link-more:hover .icon-arrow { transform: translateX(4px); }
+
+/* ---- Scroll reveal (only when JS is available) ----------------- */
+@media (prefers-reduced-motion: no-preference) {
+  .js [data-reveal] {
+    opacity: 0;
+    transform: translateY(26px);
+    transition:
+      opacity var(--dur) var(--ease) var(--d, 0s),
+      transform var(--dur) var(--ease) var(--d, 0s);
+  }
+  .js [data-reveal].is-in {
+    opacity: 1;
+    transform: none;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+/* ---- Skip link ------------------------------------------------ */
+.skip-link {
+  position: fixed;
+  top: 0.75rem;
+  left: 0.75rem;
+  z-index: 70;
+  padding: 0.7rem 1.1rem;
+  background: var(--gold);
+  color: var(--navy-900);
+  font-weight: 620;
+  text-decoration: none;
+  transform: translateY(-160%);
+  transition: transform 0.3s var(--ease);
+}
+.skip-link:focus { transform: none; }
+
+/* ---- Tag chip -------------------------------------------------- */
+.tag {
+  display: inline-block;
+  padding: 0.3rem 0.6rem;
+  border: 1px solid var(--line);
+  font-size: 0.72rem;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--muted-c);
+}

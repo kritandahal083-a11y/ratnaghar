@@ -1,0 +1,178 @@
+---
+import Icon from './Icon.astro';
+import BrandMark from './BrandMark.astro';
+import { NAV_LINKS, CONTACT, SOCIALS } from '../data/site';
+import { ALL_SERVICES } from '../data/services';
+
+const year = new Date().getFullYear();
+---
+
+<footer class="footer" aria-label="Footer">
+  <div class="container">
+    <div class="footer__grid">
+      <div class="footer__brand">
+        <a class="footer__logo" href="#home" aria-label="Shree Ratna Ghar — back to top">
+          <BrandMark size={40} />
+          <span class="footer__word">Shree Ratna Ghar</span>
+        </a>
+        <p class="footer__blurb">
+          An IT &amp; digital advertising company. We design, build, and grow digital business —
+          one team from strategy to ship.
+        </p>
+        <ul class="footer__socials" aria-label="Social media">
+          {
+            SOCIALS.map((s) => (
+              <li>
+                <a href={s.href} aria-label={`Shree Ratna Ghar on ${s.name}`} title="Placeholder link — configure before launch">
+                  <Icon name={s.id} size={17} />
+                </a>
+              </li>
+            ))
+          }
+        </ul>
+      </div>
+
+      <nav class="footer__col" aria-label="Footer — explore">
+        <h3 class="footer__label">Explore</h3>
+        <ul>
+          {NAV_LINKS.map((l) => <li><a href={l.href}>{l.label}</a></li>)}
+        </ul>
+      </nav>
+
+      <nav class="footer__col" aria-label="Footer — services">
+        <h3 class="footer__label">Services</h3>
+        <ul>
+          {ALL_SERVICES.slice(0, 6).map((s) => <li><a href="#services">{s.name}</a></li>)}
+          <li><a href="#services">All services</a></li>
+        </ul>
+      </nav>
+
+      <div class="footer__col" aria-label="Contact information">
+        <h3 class="footer__label">Contact</h3>
+        <ul>
+          <li><a href={`mailto:${CONTACT.email}`}>{CONTACT.email}</a></li>
+          <li><a href={CONTACT.phoneHref}>{CONTACT.phoneDisplay}</a></li>
+          <li><a href={CONTACT.whatsapp} target="_blank" rel="noopener">WhatsApp</a></li>
+          <li><span class="footer__address">{CONTACT.address}</span></li>
+        </ul>
+        <p class="footer__note">Demo contact details — replace before launch.</p>
+      </div>
+    </div>
+
+    <div class="footer__bar">
+      <p class="footer__copy">© {year} Shree Ratna Ghar — IT &amp; Digital Advertising. All rights reserved.</p>
+      <a class="footer__top" href="#home">
+        Back to top
+        <Icon class="icon-top" name="ph:arrow-right" size={14} />
+      </a>
+    </div>
+  </div>
+</footer>
+
+<style>
+  .footer {
+    background: var(--navy-900);
+    color: #B9C8DC;
+    border-top: 1px solid rgba(212, 175, 55, 0.3);
+    padding-top: clamp(3.5rem, 7vw, 6rem);
+  }
+  .footer__grid {
+    display: grid;
+    grid-template-columns: 1.6fr 1fr 1fr 1.2fr;
+    gap: clamp(2rem, 4vw, 4rem);
+    padding-bottom: 3.2rem;
+  }
+
+  .footer__logo {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.8rem;
+    text-decoration: none;
+  }
+  .footer__word {
+    font-family: var(--font-display);
+    font-weight: 620;
+    font-size: 1.02rem;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    white-space: nowrap;
+    color: #F2F7FD;
+  }
+  .footer__blurb {
+    margin-top: 1.2rem;
+    max-width: 30ch;
+    font-size: 0.95rem;
+    line-height: 1.65;
+  }
+  .footer__socials {
+    display: flex;
+    gap: 0.7rem;
+    margin-top: 1.7rem;
+  }
+  .footer__socials a {
+    display: grid;
+    place-items: center;
+    width: 2.5rem;
+    height: 2.5rem;
+    border: 1px solid var(--line-strong);
+    color: #C6D3E4;
+    transition: color 0.25s var(--ease), border-color 0.25s var(--ease), transform 0.25s var(--ease);
+  }
+  .footer__socials a:hover {
+    color: var(--gold);
+    border-color: var(--gold);
+    transform: translateY(-2px);
+  }
+
+  .footer__label {
+    font-size: 0.78rem;
+    font-weight: 620;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 1.3rem;
+  }
+  .footer__col ul { display: grid; gap: 0.65rem; }
+  .footer__col a,
+  .footer__address {
+    color: #C6D3E4;
+    font-size: 0.95rem;
+    text-decoration: none;
+  }
+  .footer__col a:hover { color: #F2F7FD; text-decoration: underline; text-underline-offset: 3px; }
+  .footer__note {
+    margin-top: 1rem;
+    font-size: 0.78rem;
+    color: var(--muted-c);
+    opacity: 0.85;
+  }
+
+  .footer__bar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1.5rem;
+    padding-block: 1.5rem;
+    border-top: 1px solid rgba(240, 246, 255, 0.1);
+  }
+  .footer__copy { font-size: 0.85rem; }
+  .footer__top {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.45rem;
+    color: var(--gold);
+    font-size: 0.88rem;
+    font-weight: 600;
+    text-decoration: none;
+  }
+  .footer__top :global(.icon-top) { transform: rotate(-90deg); }
+  .footer__top:hover { color: #F2F7FD; }
+
+  @media (max-width: 62rem) {
+    .footer__grid { grid-template-columns: 1fr 1fr; }
+  }
+  @media (max-width: 40rem) {
+    .footer__grid { grid-template-columns: 1fr; }
+    .footer__bar { flex-direction: column-reverse; align-items: flex-start; }
+  }
+</style>

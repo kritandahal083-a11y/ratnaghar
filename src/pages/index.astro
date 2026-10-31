@@ -1,0 +1,37 @@
+---
+import Base from '../layouts/Base.astro';
+import SiteHeader from '../components/SiteHeader.astro';
+import Hero from '../components/Hero.astro';
+import Ticker from '../components/Ticker.astro';
+import About from '../components/About.astro';
+import Services from '../components/Services.astro';
+import WhyChoose from '../components/WhyChoose.astro';
+import Process from '../components/Process.astro';
+import Industries from '../components/Industries.astro';
+import Work from '../components/Work.astro';
+import CtaBand from '../components/CtaBand.astro';
+import Contact from '../components/Contact.astro';
+import SiteFooter from '../components/SiteFooter.astro';
+---
+
+<Base
+  title="Shree Ratna Ghar — IT Solutions & Digital Advertising Agency"
+  description="Shree Ratna Ghar builds and grows digital business: web and software development, UI/UX design, digital marketing, social media, advertising, SEO, branding, cloud and IT consulting — one premium team from strategy to ship."
+>
+  <SiteHeader />
+  <main id="main">
+    <Hero />
+    <Ticker />
+    <About />
+    <Services />
+    <WhyChoose />
+    <Process />
+    <Industries />
+    <Work />
+    <div class="theme-dark" id="contact-tail">
+      <CtaBand />
+      <Contact />
+    </div>
+  </main>
+  <SiteFooter />
+</Base>
